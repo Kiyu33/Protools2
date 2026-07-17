@@ -107,8 +107,9 @@ button:hover {
 =========================== */
 
 #question-image {
-    width: 200px !important;
+    width: 250px !important;
     height: auto !important;
+    max-width: none !important;
     display: block;
     margin: 20px auto;
     border: 5px solid red;
