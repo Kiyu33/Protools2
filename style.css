@@ -107,7 +107,7 @@ button:hover {
 =========================== */
 
 #question-image {
-    width: 400px;
+    width: min(400px, 90vw);
     height: 250px;
     object-fit: contain;
     display: block;
@@ -236,16 +236,22 @@ button:hover {
         padding: 15px;
     }
 
+    /* 問題画像 */
     #question-image {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
+        width: min(400px, 90vw);
+        height: 250px;
+        object-fit: contain;
+        display: block;
+        margin: 20px auto;
     }
 
+    /* 答え合わせ画像 */
     .answer-item img {
-        width: 100%;
-        max-width: 100%;
+        width: min(350px, 90vw);
         height: auto;
+        object-fit: contain;
+        display: block;
+        margin: 15px auto;
     }
 
     #final-score,
@@ -253,3 +259,4 @@ button:hover {
         font-size: 22px;
     }
 }
+
