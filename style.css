@@ -9,21 +9,13 @@
 }
 
 body {
-
     background: #121212;
-
     color: white;
-
     font-family: "Yu Gothic", sans-serif;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     min-height: 100vh;
-
 }
 
 /* ===========================
@@ -31,37 +23,24 @@ body {
 =========================== */
 
 .container {
-
     width: 90%;
-
     max-width: 900px;
-
     text-align: center;
-
 }
 
 .hidden {
-
     display: none;
-
 }
 
 h1 {
-
     margin-bottom: 20px;
-
     font-size: 40px;
-
 }
 
 .subtitle {
-
     color: #cccccc;
-
     margin-bottom: 30px;
-
     font-size: 18px;
-
 }
 
 /* ===========================
@@ -69,39 +48,25 @@ h1 {
 =========================== */
 
 button {
-
     cursor: pointer;
-
     border: none;
-
     border-radius: 10px;
-
     padding: 15px;
-
     font-size: 18px;
-
-    transition: .3s;
-
+    transition: 0.3s;
 }
 
 button:hover {
-
     transform: scale(1.05);
-
 }
 
 /* モードボタン */
 
 .mode-btn {
-
     width: 100%;
-
     margin: 12px 0;
-
     background: #2d7ff9;
-
     color: white;
-
 }
 
 /* ===========================
@@ -109,67 +74,45 @@ button:hover {
 =========================== */
 
 .button-grid {
-
     display: grid;
-
-    grid-template-columns: repeat(4,1fr);
-
+    grid-template-columns: repeat(4, 1fr);
     gap: 15px;
-
     margin: 30px 0;
-
 }
 
 .button-grid button {
-
     background: #333;
-
     color: white;
-
 }
 
 .button-grid button:hover {
-
     background: #00bfff;
-
 }
-
 /* ===========================
    問題画面
 =========================== */
 
 .quiz-box {
-
     margin-top: 30px;
-
 }
 
 #question {
-
     margin: 30px 0;
-
     font-size: 30px;
-
     line-height: 1.5;
-
 }
 
 /* ===========================
-   画像
+   問題画像
 =========================== */
 
 #question-image {
-
     width: 100%;
-
-    max-width: 600px;
-
-    margin: 20px auto;
-
+    max-width: 500px;   /* 画像の最大幅 */
+    height: auto;       /* 縦横比を維持 */
     display: block;
-
+    margin: 20px auto;
     border-radius: 12px;
-
 }
 
 /* ===========================
@@ -177,61 +120,41 @@ button:hover {
 =========================== */
 
 .choices {
-
     display: grid;
-
     gap: 15px;
-
 }
 
 .choice-btn {
-
     background: #444;
-
     color: white;
-
     padding: 18px;
-
     font-size: 20px;
-
+    border-radius: 10px;
+    transition: 0.3s;
 }
 
 .choice-btn:hover {
-
     background: #00bfff;
-
+    transform: scale(1.02);
 }
-
 /* ===========================
    プログレスバー
 =========================== */
 
 .progress {
-
     width: 100%;
-
     height: 12px;
-
     background: #444;
-
     border-radius: 20px;
-
     margin-top: 20px;
-
     overflow: hidden;
-
 }
 
 #progress-bar {
-
     width: 0%;
-
     height: 100%;
-
     background: #00ff88;
-
-    transition: .3s;
-
+    transition: width 0.3s;
 }
 
 /* ===========================
@@ -239,24 +162,17 @@ button:hover {
 =========================== */
 
 .finish {
-
     margin-top: 40px;
-
 }
 
 .finish h2 {
-
     margin-bottom: 20px;
-
 }
 
 #final-score,
 #final-rate {
-
     font-size: 26px;
-
     margin: 15px 0;
-
 }
 
 /* ===========================
@@ -264,75 +180,77 @@ button:hover {
 =========================== */
 
 #result-list {
-
     margin-top: 40px;
-
     text-align: left;
-
 }
 
 .answer-item {
-
     background: #1e1e1e;
-
     padding: 20px;
-
     margin-bottom: 20px;
-
     border-radius: 10px;
-
 }
 
 .answer-item img {
-
     width: 100%;
-
     max-width: 350px;
-
+    height: auto;
     display: block;
-
     margin: 15px auto;
-
     border-radius: 10px;
-
 }
 
 .answer-item p {
-
     margin: 10px 0;
-
     line-height: 1.6;
-
 }
-
 /* ===========================
    スマホ対応
 =========================== */
 
-@media(max-width:700px){
+@media (max-width: 700px) {
 
-    h1{
-
-        font-size:30px;
-
+    h1 {
+        font-size: 30px;
     }
 
-    #question{
-
-        font-size:22px;
-
+    .subtitle {
+        font-size: 16px;
     }
 
-    .button-grid{
-
-        grid-template-columns:repeat(2,1fr);
-
+    #question {
+        font-size: 22px;
     }
 
-    button{
-
-        font-size:16px;
-
+    .button-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
     }
 
+    button {
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    .choice-btn {
+        font-size: 18px;
+        padding: 15px;
+    }
+
+    #question-image {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .answer-item img {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+
+    #final-score,
+    #final-rate {
+        font-size: 22px;
+    }
 }
