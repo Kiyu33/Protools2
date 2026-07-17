@@ -107,12 +107,11 @@ button:hover {
 =========================== */
 
 #question-image {
-    width: 250px !important;
-    height: auto !important;
-    max-width: none !important;
+    width: 400px;
+    height: 250px;
+    object-fit: contain;
     display: block;
     margin: 20px auto;
-    border: 5px solid red;
 }
 
 /* ===========================
