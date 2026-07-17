@@ -208,7 +208,7 @@ const questions = [
     {
         level: "beginner",
         category: "A1",
-        iamge: "images/questions3.png",
+        image: "images/questions3.png",
         question: "スクリーンショットは、空のセッションにオーディオを録音し、途中のポイントでクリップとして分割したものを、すぐ時に複製したものである。この時、セッションの保存先の【Audio Files】フォルダにはいくつのオーディオ・ファイルが存在するか、次の中から選び、番号で答えなさい。ただし、インターリーブがオンになっていてまだ保存していない。",
         choices: [
             "0個",
