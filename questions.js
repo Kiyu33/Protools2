@@ -1241,7 +1241,7 @@ const questions = [
             "5000",
             "32000"
         ],
-        answer: 0
+        answer: 3
     },
 
     {
@@ -1307,7 +1307,7 @@ const questions = [
             "フェードアウトを設定する。",
             "クリップAとクリップBを同時にトリミングする。"
         ],
-        answer: 3
+        answer: 0
     },
 
     {
@@ -1321,7 +1321,7 @@ const questions = [
             "クリップとオートメーションすべてが消去される。",
             "それぞれのトラックが表示しているビューに従って、それぞれ違うものが消去される。"
         ],
-        answer: 0
+        answer: 3
     },
 
     {
@@ -1334,7 +1334,7 @@ const questions = [
             "先行するクリップをフェードアウトさせながら、後続のクリップをフェードインさせる",
             "先行するクリップをフェードインさせながら、後続のクリップをフェードアウトさせる"
         ],
-        answer: 3
+        answer: 2
     },
 
     {
@@ -1348,7 +1348,7 @@ const questions = [
             "フェードとクリップ",
             "選択された部分のオーディオ・データがディスクから消える。"
         ],
-        answer: 2
+        answer: 0
     },
 
     {
@@ -3120,7 +3120,7 @@ const questions = [
             "[Control] (Mac) / [Start] (Win) を押しながらセンドを移動する。",
             "[Shift] を押しながらセンドを移動する。"
         ],
-        answer: 2
+        answer: 1
     },
 
     {
@@ -3133,7 +3133,7 @@ const questions = [
             "Audio Interchange File Format",
             "Audio Interactive File Format"
         ],
-        answer: 3
+        answer: 2
     },
 
     {
@@ -3146,7 +3146,7 @@ const questions = [
             "MPEG-2 Audio Layer 3",
             "MPEG-1 Audio Layer 3"
         ],
-        answer: 4
+        answer: 3
     },
 
     {
@@ -3160,7 +3160,7 @@ const questions = [
             "テンキーの [= (イコール)] (Mac) / テンキーの [* (アスタリスク)] (Win)",
             "デフォルトショートカットは存在しない。"
         ],
-        answer: 3
+        answer: 2
     },
 
     {
@@ -3173,7 +3173,7 @@ const questions = [
             "[Option] + [Return] (Mac) / [Alt] + [Enter] (Win)",
             "[Control] + [Return] (Mac) / [Start] + [Enter] (Win)"
         ],
-        answer: 2
+        answer: 1
     },
 
     {
@@ -3186,7 +3186,7 @@ const questions = [
             "[Shift] + [Return] (Mac) / [Shift] + [Enter] (Win)",
             "[Control] + [Return] (Mac) / [Start] + [Enter] (Win)"
         ],
-        answer: 1
+        answer: 0
     },
 
     {
@@ -3200,7 +3200,7 @@ const questions = [
             "セッションの先頭に戻る。",
             "セッションの最後に進む。"
         ],
-        answer: 1
+        answer: 0
     },
 
     {
@@ -3213,7 +3213,7 @@ const questions = [
             "[Command] (Mac) / [Control] (Win) + [2]",
             "[Option] (Mac) / [Alt] (Win) + [2]"
         ],
-        answer: 1
+        answer: 0
     },
 
     {
@@ -3226,7 +3226,7 @@ const questions = [
             "[Command] (Mac) / [Control] (Win) + テンキーの [. (ピリオド)]",
             "[Shift] + [Enter]"
         ],
-        answer: 2
+        answer: 1
     },
 
     {
@@ -3239,7 +3239,7 @@ const questions = [
             "[Shift]",
             "[Control] (Mac) / [Start] (Win)"
         ],
-        answer: 2
+        answer: 1
     },
 
     {
@@ -3252,7 +3252,7 @@ const questions = [
             "[Command] (Mac) / [Control] (Win) + [T]",
             "[Command] (Mac) / [Control] (Win) + [V]"
         ],
-        answer: 1
+        answer: 0
     },
 
     {
@@ -3265,7 +3265,7 @@ const questions = [
             "編集モードでフェードの設定ができない。",
             "シンクの設定で外部シンクがかけられない。"
         ],
-        answer: 2
+        answer: 1
     },
 
     {
@@ -3278,7 +3278,7 @@ const questions = [
             "クリップをセレクタで選び、[Command] (Mac) / [Control] (Win) + [W] を押す。",
             "クリップをセレクタで選び、[Command] (Mac) / [Control] (Win) + [X] を押す。"
         ],
-        answer: 2
+        answer: 1
     },
 
     {
@@ -3291,7 +3291,7 @@ const questions = [
             "[Command] (Mac) / [Control] (Win) + [Shift] + 左右矢印",
             "[Command] (Mac) / [Control] (Win) + [Shift] + 上下矢印"
         ],
-        answer: 1
+        answer: 0
     },
 
     {
@@ -3304,7 +3304,7 @@ const questions = [
             "[Command] (Mac) / [Control] (Win) + [Shift] + 左右矢印",
             "[Command] (Mac) / [Control] (Win) + [Shift] + 上下矢印"
         ],
-        answer: 2
+        answer: 1
     },
 
     {
@@ -3317,7 +3317,7 @@ const questions = [
             "[Command] (Mac) / [Control] (Win) + [Shift] + 左右矢印",
             "[Command] (Mac) / [Control] (Win) + [Shift] + 上下矢印"
         ],
-        answer: 4
+        answer: 3
     },
 
     {
@@ -3330,7 +3330,7 @@ const questions = [
             "Volume Controlled Automation",
             "Volume Console Association"
         ],
-        answer: 2
+        answer: 1
     },
 
     {
@@ -3343,7 +3343,7 @@ const questions = [
             "F5 + F6",
             "F7 + F8"
         ],
-        answer: 4
+        answer: 3
     },
 
     {
@@ -3356,6 +3356,6 @@ const questions = [
             "設定メニューのキーボードショートカットから変更する。",
             "オプションメニューのキーボードショートカットから変更する。"
         ],
-        answer: 3
+        answer: 2
     }
 ];
