@@ -1,262 +1,246 @@
 /* ===========================
-   基本設定
+   基本設定 & ガウスグラデーション背景
 =========================== */
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
 }
 
 body {
-    background: #121212;
-    color: white;
-    font-family: "Yu Gothic", sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+	background: #0c0b14;
+	color: white;
+	font-family: "Yu Gothic", sans-serif;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	overflow-x: hidden;
 }
 
-/* ===========================
-   共通
-=========================== */
+body::before {
+	content: "";
+	position: fixed;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: radial-gradient(circle at 40% 40%, rgba(127, 0, 255, 0.15) 0%, transparent 40%),
+	            radial-gradient(circle at 60% 60%, rgba(0, 191, 255, 0.12) 0%, transparent 45%);
+	filter: blur(100px);
+	z-index: -1;
+	pointer-events: none;
+}
 
 .container {
-    width: 90%;
-    max-width: 900px;
-    text-align: center;
+	width: 90%;
+	max-width: 900px;
+	text-align: center;
+}
+
+.container:not(.hidden) {
+	animation: fadeIn 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+	from { opacity: 0; }
+	to { opacity: 1; }
 }
 
 .hidden {
-    display: none;
+	display: none !important;
 }
 
+/* ===========================
+   UIデザイン設定
+=========================== */
+
 h1 {
-    margin-bottom: 20px;
-    font-size: 40px;
+	margin-bottom: 20px;
+	font-size: 36px;
+	font-weight: bold;
 }
 
 .subtitle {
-    color: #cccccc;
-    margin-bottom: 30px;
-    font-size: 18px;
+	color: #cccccc;
+	margin-bottom: 30px;
+	font-size: 18px;
 }
 
 /* ===========================
-   ボタン
+   ボタン基本
 =========================== */
 
 button {
-    cursor: pointer;
-    border: none;
-    border-radius: 10px;
-    padding: 15px;
-    font-size: 18px;
-    transition: 0.3s;
-}
-
-button:hover {
-    transform: scale(1.05);
+	cursor: pointer;
+	border: none;
+	border-radius: 10px;
+	padding: 15px;
+	font-size: 18px;
+	transition: background-color 0.2s;
 }
 
 /* モードボタン */
-
 .mode-btn {
-    width: 100%;
-    margin: 12px 0;
-    background: #2d7ff9;
-    color: white;
+	width: 100%;
+	margin: 12px 0;
+	background: #2d7ff9;
+	color: white;
+}
+
+.mode-btn:hover {
+	background: #4b95ff;
 }
 
 /* ===========================
-   A1～D4
+   Gridメニュー（A1〜D4）
 =========================== */
 
 .button-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin: 30px 0;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 15px;
+	margin: 30px 0;
 }
 
 .button-grid button {
-    background: #333;
-    color: white;
+	background: #333;
+	color: white;
 }
 
 .button-grid button:hover {
-    background: #00bfff;
+	background: #00bfff;
 }
+
 /* ===========================
-   問題画面
+   問題画面要素
 =========================== */
 
 .quiz-box {
-    margin-top: 30px;
+	margin-top: 30px;
 }
 
 #question {
-    margin: 30px 0;
-    font-size: 30px;
-    line-height: 1.5;
+	margin: 30px 0;
+	font-size: 30px;
+	line-height: 1.5;
 }
-
-/* ===========================
-   問題画像
-=========================== */
 
 #question-image {
-    width: min(400px, 90vw);
-    height: 250px;
-    object-fit: contain;
-    display: block;
-    margin: 20px auto;
+	width: 400px;
+	height: 250px;
+	object-fit: contain;
+	display: block;
+	margin: 20px auto;
+	border-radius: 8px;
+	box-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
 
-/* ===========================
-   選択肢
-=========================== */
-
+/* 選択肢 */
 .choices {
-    display: grid;
-    gap: 15px;
+	display: grid;
+	gap: 15px;
 }
 
 .choice-btn {
-    background: #444;
-    color: white;
-    padding: 18px;
-    font-size: 20px;
-    border-radius: 10px;
-    transition: 0.3s;
+	background: #444;
+	color: white;
+	padding: 18px;
+	font-size: 20px;
+	text-align: left;
 }
 
 .choice-btn:hover {
-    background: #00bfff;
-    transform: scale(1.02);
+	background: #555;
 }
+
+/* ★正解：少しだけじんわり光る演出を残し、文字は白いまま維持 */
+.choice-btn.correct-flash {
+	background: #00ff88 !important;
+	color: white !important;
+	font-weight: bold;
+	box-shadow: 0 0 12px rgba(0, 255, 136, 0.6);
+}
+
+/* ★不正解：文字は白いまま維持 */
+.choice-btn.incorrect-flash {
+	background: #ff5555 !important;
+	color: white !important;
+	box-shadow: 0 0 12px rgba(255, 85, 85, 0.4);
+}
+
 /* ===========================
    プログレスバー
 =========================== */
 
 .progress {
-    width: 100%;
-    height: 12px;
-    background: #444;
-    border-radius: 20px;
-    margin-top: 20px;
-    overflow: hidden;
+	width: 100%;
+	height: 12px;
+	background: #444;
+	border-radius: 20px;
+	margin-top: 20px;
+	overflow: hidden;
 }
 
 #progress-bar {
-    width: 0%;
-    height: 100%;
-    background: #00ff88;
-    transition: width 0.3s;
+	width: 0%;
+	height: 100%;
+	background: #00ff88;
+	transition: width 0.3s ease;
 }
 
 /* ===========================
-   終了画面
+   リザルト・答え合わせ
 =========================== */
 
 .finish {
-    margin-top: 40px;
+	margin-top: 40px;
 }
 
-.finish h2 {
-    margin-bottom: 20px;
+#final-score, #final-rate {
+	font-size: 26px;
+	margin: 15px 0;
 }
 
-#final-score,
-#final-rate {
-    font-size: 26px;
-    margin: 15px 0;
+.rank {
+	font-size: 36px;
+	margin: 20px 0;
+	font-weight: bold;
 }
-
-/* ===========================
-   答え合わせ
-=========================== */
 
 #result-list {
-    margin-top: 40px;
-    text-align: left;
+	margin-top: 40px;
+	text-align: left;
 }
 
 .answer-item {
-    background: #1e1e1e;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 10px;
+	background: #1e1e1e;
+	padding: 20px;
+	margin-bottom: 20px;
+	border-radius: 10px;
 }
 
 .answer-item img {
-    width: 100%;
-    max-width: 350px;
-    height: auto;
-    display: block;
-    margin: 15px auto;
-    border-radius: 10px;
+	width: 100%;
+	max-width: 350px;
+	height: auto;
+	display: block;
+	margin: 15px auto;
+	border-radius: 10px;
 }
 
 .answer-item p {
-    margin: 10px 0;
-    line-height: 1.6;
+	margin: 10px 0;
+	line-height: 1.6;
 }
-/* ===========================
-   スマホ対応
-=========================== */
 
 @media (max-width: 700px) {
-
-    h1 {
-        font-size: 30px;
-    }
-
-    .subtitle {
-        font-size: 16px;
-    }
-
-    #question {
-        font-size: 22px;
-    }
-
-    .button-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
-    }
-
-    button {
-        font-size: 16px;
-        padding: 12px;
-    }
-
-    .choice-btn {
-        font-size: 18px;
-        padding: 15px;
-    }
-
-    /* 問題画像 */
-    #question-image {
-        width: min(400px, 90vw);
-        height: 250px;
-        object-fit: contain;
-        display: block;
-        margin: 20px auto;
-    }
-
-    /* 答え合わせ画像 */
-    .answer-item img {
-        width: min(350px, 90vw);
-        height: auto;
-        object-fit: contain;
-        display: block;
-        margin: 15px auto;
-    }
-
-    #final-score,
-    #final-rate {
-        font-size: 22px;
-    }
+	h1 { font-size: 30px; }
+	.subtitle { font-size: 16px; }
+	#question { font-size: 22px; }
+	.button-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+	button { font-size: 16px; padding: 12px; }
+	.choice-btn { font-size: 18px; padding: 15px; }
+	#question-image, .answer-item img { width: 100%; max-width: 100%; height: auto; }
 }
-
