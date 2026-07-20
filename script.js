@@ -1,299 +1,551 @@
 // ===========================
 // Pro Tools 四択問題集
-// script.js Part1
+// script.js 完全版
 // ===========================
 
-// ---------- ホーム ----------
+// ===========================
+// 画面要素
+// ===========================
 const homeScreen = document.getElementById("home-screen");
-const beginnerMenu = document.getElementById("beginner-menu");
+const categoryMenu = document.getElementById("beginner-menu");
 const quizScreen = document.getElementById("quiz-screen");
+const menuTitle = document.getElementById("menu-title");
 
-// ---------- ボタン ----------
+// ===========================
+// ホーム画面のボタン
+// ===========================
 const beginnerBtn = document.getElementById("beginner-btn");
 const intermediateBtn = document.getElementById("intermediate-btn");
 const allBtn = document.getElementById("all-btn");
 const randomBtn = document.getElementById("random-btn");
 const backBtn = document.getElementById("back-btn");
 
-// ---------- A～D ----------
-const a1Btn = document.getElementById("a1-btn");
-const a2Btn = document.getElementById("a2-btn");
-const b1Btn = document.getElementById("b1-btn");
-const b2Btn = document.getElementById("b2-btn");
-const c1Btn = document.getElementById("c1-btn");
-const c2Btn = document.getElementById("c2-btn");
-const c3Btn = document.getElementById("c3-btn");
-const c4Btn = document.getElementById("c4-btn");
-const d1Btn = document.getElementById("d1-btn");
-const d2Btn = document.getElementById("d2-btn");
-const d3Btn = document.getElementById("d3-btn");
-const d4Btn = document.getElementById("d4-btn");
+// ===========================
+// カテゴリボタン
+// ===========================
+const categoryButtons = {
+    A1: document.getElementById("a1-btn"),
+    A2: document.getElementById("a2-btn"),
+    B1: document.getElementById("b1-btn"),
+    B2: document.getElementById("b2-btn"),
+    C1: document.getElementById("c1-btn"),
+    C2: document.getElementById("c2-btn"),
+    C3: document.getElementById("c3-btn"),
+    C4: document.getElementById("c4-btn"),
+    D1: document.getElementById("d1-btn"),
+    D2: document.getElementById("d2-btn"),
+    D3: document.getElementById("d3-btn"),
+    D4: document.getElementById("d4-btn")
+};
 
-// ---------- 問題画面 ----------
+// ===========================
+// 問題画面
+// ===========================
 const questionNumber = document.getElementById("question-number");
 const questionText = document.getElementById("question");
 const questionImage = document.getElementById("question-image");
 const choicesDiv = document.getElementById("choices");
 const progressBar = document.getElementById("progress-bar");
+
 const finishBox = document.getElementById("finish");
 const finalScore = document.getElementById("final-score");
 const finalRate = document.getElementById("final-rate");
 
+const retryBtn = document.getElementById("retry-btn");
+const resultHomeBtn = document.getElementById("result-home-btn");
+
 // ===========================
-// 変数
+// クイズ用変数
 // ===========================
+let selectedLevel = "beginner";
 let quizQuestions = [];
 let currentQuestion = 0;
 let score = 0;
 let userAnswers = [];
 let randomMode = false;
 
+// 回答後の連続クリックを防止
+let acceptingAnswer = true;
+
 // ===========================
-// ホーム画面イベント
+// 初級カテゴリメニューを開く
 // ===========================
 beginnerBtn.addEventListener("click", () => {
-	homeScreen.classList.add("hidden");
-	beginnerMenu.classList.remove("hidden");
+    selectedLevel = "beginner";
+
+    menuTitle.textContent = "🟢 初級問題";
+
+    homeScreen.classList.add("hidden");
+    categoryMenu.classList.remove("hidden");
 });
 
-backBtn.addEventListener("click", () => {
-	beginnerMenu.classList.add("hidden");
-	homeScreen.classList.remove("hidden");
-});
-
+// ===========================
+// 中級カテゴリメニューを開く
+// ===========================
 intermediateBtn.addEventListener("click", () => {
-	randomMode = false;
-	quizQuestions = questions.filter(q => q.level === "intermediate");
-	startQuiz();
+    selectedLevel = "intermediate";
+
+    menuTitle.textContent = "🟡 中級問題";
+
+    homeScreen.classList.add("hidden");
+    categoryMenu.classList.remove("hidden");
 });
 
+// ===========================
+// ホームへ戻る
+// ===========================
+backBtn.addEventListener("click", () => {
+    categoryMenu.classList.add("hidden");
+    homeScreen.classList.remove("hidden");
+});
+
+// ===========================
+// 全問題
+// ===========================
 allBtn.addEventListener("click", () => {
-	randomMode = false;
-	quizQuestions = [...questions];
-	startQuiz();
+    randomMode = false;
+    quizQuestions = [...questions];
+
+    startQuiz();
 });
 
+// ===========================
+// ランダムモード
+// 問題順と選択肢順をランダムにする
+// ===========================
 randomBtn.addEventListener("click", () => {
-	randomMode = true;
-	quizQuestions = [...questions];
-	startQuiz();
+    randomMode = true;
+
+    quizQuestions = shuffleArray([...questions]);
+
+    startQuiz();
 });
 
 // ===========================
-// A1～D4 ボタン
+// カテゴリボタンの設定
 // ===========================
-a1Btn.addEventListener("click", () => { quizQuestions = questions.filter(q => q.category === "A1"); randomMode = false; startQuiz(); });
-a2Btn.addEventListener("click", () => { quizQuestions = questions.filter(q => q.category === "A2"); randomMode = false; startQuiz(); });
-b1Btn.addEventListener("click", () => { quizQuestions = questions.filter(q => q.category === "B1"); randomMode = false; startQuiz(); });
-b2Btn.addEventListener("click", () => { quizQuestions = questions.filter(q => q.category === "B2"); randomMode = false; startQuiz(); });
-c1Btn.addEventListener("click", () => { quizQuestions = questions.filter(q => q.category === "C1"); randomMode = false; startQuiz(); });
-c2Btn.addEventListener("click", () => { quizQuestions = questions.filter(q => q.category === "C2"); randomMode = false; startQuiz(); });
-c3Btn.addEventListener("click", () => { quizQuestions = questions.filter(q => q.category === "C3"); randomMode = false; startQuiz(); });
-c4Btn.addEventListener("click", () => { quizQuestions = questions.filter(q => q.category === "C4"); randomMode = false; startQuiz(); });
-d1Btn.addEventListener("click", () => { quizQuestions = questions.filter(q => q.category === "D1"); randomMode = false; startQuiz(); });
-d2Btn.addEventListener("click", () => { quizQuestions = questions.filter(q => q.category === "D2"); randomMode = false; startQuiz(); });
-d3Btn.addEventListener("click", () => { quizQuestions = questions.filter(q => q.category === "D3"); randomMode = false; startQuiz(); });
-d4Btn.addEventListener("click", () => { quizQuestions = questions.filter(q => q.category === "D4"); randomMode = false; startQuiz(); });
+Object.entries(categoryButtons).forEach(([category, button]) => {
+    button.addEventListener("click", () => {
+        startCategoryQuiz(category);
+    });
+});
+
+// ===========================
+// レベル・カテゴリ別に問題を選択
+// ===========================
+function startCategoryQuiz(category) {
+    randomMode = false;
+
+    quizQuestions = questions.filter(question => {
+        return (
+            question.level === selectedLevel &&
+            question.category === category
+        );
+    });
+
+    if (quizQuestions.length === 0) {
+        alert(
+            `${selectedLevel === "beginner" ? "初級" : "中級"}の` +
+            `${category}には問題が登録されていません。`
+        );
+
+        return;
+    }
+
+    startQuiz();
+}
 
 // ===========================
 // クイズ開始
 // ===========================
 function startQuiz() {
-	currentQuestion = 0;
-	score = 0;
-	userAnswers = [];
+    if (quizQuestions.length === 0) {
+        alert("出題できる問題がありません。");
+        return;
+    }
 
-	beginnerMenu.classList.add("hidden");
-	homeScreen.classList.add("hidden");
-	quizScreen.classList.remove("hidden");
-	finishBox.classList.add("hidden");
+    currentQuestion = 0;
+    score = 0;
+    userAnswers = [];
+    acceptingAnswer = true;
 
-	const quizBox = document.querySelector(".quiz-box");
-	quizBox.classList.remove("hidden");
-	progressBar.style.width = "0%";
+    homeScreen.classList.add("hidden");
+    categoryMenu.classList.add("hidden");
+    quizScreen.classList.remove("hidden");
 
-	showQuestion();
+    finishBox.classList.add("hidden");
+
+    const quizBox = document.querySelector(".quiz-box");
+
+    if (quizBox) {
+        quizBox.classList.remove("hidden");
+    }
+
+    removeOldResultElements();
+
+    progressBar.style.width = "0%";
+
+    showQuestion();
 }
 
 // ===========================
-// 選択肢シャッフル（ランダムモード用）
-// ===========================
-function shuffleChoices(question) {
-	const choices = [...question.choices];
-	const correctChoice = choices[question.answer];
-
-	for (let i = choices.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[choices[i], choices[j]] = [choices[j], choices[i]];
-	}
-
-	return {
-		level: question.level,
-		category: question.category,
-		image: question.image,
-		question: question.question,
-		choices: choices,
-		answer: choices.indexOf(correctChoice)
-	};
-}
-
-// ===========================
-// 問題表示（★画像のクリア処理を追加してバグを完全修正）
+// 問題を表示
 // ===========================
 function showQuestion() {
-	let q = quizQuestions[currentQuestion];
+    acceptingAnswer = true;
 
-	if (randomMode) {
-		q = shuffleChoices(q);
-		quizQuestions[currentQuestion] = q;
-	}
+    const originalQuestion = quizQuestions[currentQuestion];
 
-	questionNumber.textContent = `問題 ${currentQuestion + 1} / ${quizQuestions.length}`;
-	progressBar.style.width = ((currentQuestion + 1) / quizQuestions.length) * 100 + "%";
+    let displayedQuestion;
 
-	// ===========================
-	// 🛠️ 【ここを修正】前後の画像の競合・残像バグを防ぐ
-	// ===========================
-	// 1. まず現在のsrcを空にし、非表示クラスを入れて「完全に初期化」する
-	questionImage.src = "";
-	questionImage.classList.add("hidden");
+    if (randomMode) {
+        displayedQuestion = createShuffledQuestion(originalQuestion);
+        quizQuestions[currentQuestion] = displayedQuestion;
+    } else {
+        displayedQuestion = originalQuestion;
+    }
 
-	// 2. その上で、今回の問題に画像がある場合のみ再セットして表示する
-	if (q.image) {
-		questionImage.src = q.image;
-		questionImage.classList.remove("hidden");
-	}
+    questionNumber.textContent =
+        `問題 ${currentQuestion + 1} / ${quizQuestions.length}`;
 
-	// 問題文
-	questionText.textContent = q.question;
-	choicesDiv.innerHTML = "";
+    progressBar.style.width =
+        `${((currentQuestion + 1) / quizQuestions.length) * 100}%`;
 
-	q.choices.forEach((choice, index) => {
-		const button = document.createElement("button");
-		button.textContent = choice;
-		button.classList.add("choice-btn");
-		button.dataset.index = index;
-		choicesDiv.appendChild(button);
-	});
+    // 前の問題の画像をリセット
+    questionImage.src = "";
+    questionImage.classList.add("hidden");
+
+    // 今回の問題に画像がある場合だけ表示
+    if (displayedQuestion.image) {
+        questionImage.src = displayedQuestion.image;
+        questionImage.classList.remove("hidden");
+    }
+
+    questionText.textContent = displayedQuestion.question;
+
+    choicesDiv.innerHTML = "";
+
+    displayedQuestion.choices.forEach((choice, index) => {
+        const button = document.createElement("button");
+
+        button.type = "button";
+        button.textContent = choice;
+        button.classList.add("choice-btn");
+        button.dataset.index = index;
+
+        choicesDiv.appendChild(button);
+    });
 }
 
 // ===========================
-// 回答処理（★緑の正解フラッシュを復活させ、振動だけを完全カット！）
+// 回答処理
 // ===========================
-choicesDiv.addEventListener("click", (event) => {
-	if (!event.target.classList.contains("choice-btn")) {
-		return;
-	}
+choicesDiv.addEventListener("click", event => {
+    const selectedButton = event.target.closest(".choice-btn");
 
-	const buttons = document.querySelectorAll(".choice-btn");
-	buttons.forEach(button => {
-		button.disabled = true;
-	});
+    if (!selectedButton || !acceptingAnswer) {
+        return;
+    }
 
-	const selected = Number(event.target.dataset.index);
-	const correctAnswer = quizQuestions[currentQuestion].answer;
-	userAnswers[currentQuestion] = selected;
+    acceptingAnswer = false;
 
-	let isCorrect = (selected === correctAnswer);
-	let viewDelay = isCorrect ? 400 : 2000;
+    const buttons = choicesDiv.querySelectorAll(".choice-btn");
 
-	if (isCorrect) {
-		score++;
-		event.target.classList.add("correct-flash");
-	} else {
-		// 画面がブルブル揺れるコードは一切なし。静止したまま色だけが切り替わります。
-		event.target.classList.add("incorrect-flash"); // 選んだ間違えボタンを赤に
-		buttons[correctAnswer].classList.add("correct-flash"); // 同時に、正解ボタンを緑に光らせる
-	}
+    buttons.forEach(button => {
+        button.disabled = true;
+    });
 
-	setTimeout(() => {
-		currentQuestion++;
-		
-		if (currentQuestion < quizQuestions.length) {
-			showQuestion();
-		} else {
-			showResult();
-		}
-	}, viewDelay);
+    const selectedAnswer = Number(selectedButton.dataset.index);
+    const correctAnswer = quizQuestions[currentQuestion].answer;
+
+    userAnswers[currentQuestion] = selectedAnswer;
+
+    const isCorrect = selectedAnswer === correctAnswer;
+
+    let displayTime;
+
+    if (isCorrect) {
+        score++;
+
+        selectedButton.classList.add("correct-flash");
+
+        displayTime = 400;
+    } else {
+        selectedButton.classList.add("incorrect-flash");
+
+        if (buttons[correctAnswer]) {
+            buttons[correctAnswer].classList.add("correct-flash");
+        }
+
+        displayTime = 2000;
+    }
+
+    setTimeout(() => {
+        currentQuestion++;
+
+        if (currentQuestion < quizQuestions.length) {
+            showQuestion();
+        } else {
+            showResult();
+        }
+    }, displayTime);
 });
 
 // ===========================
 // 結果画面
 // ===========================
 function showResult() {
-	document.querySelector(".quiz-box").classList.add("hidden");
-	finishBox.classList.remove("hidden");
+    const quizBox = document.querySelector(".quiz-box");
 
-	finalScore.textContent = `正答数：${score} / ${quizQuestions.length}`;
-	const rate = Math.round(score / quizQuestions.length * 100);
-	finalRate.textContent = `正答率：${rate}%`;
+    if (quizBox) {
+        quizBox.classList.add("hidden");
+    }
 
-	const rank = document.createElement("h2");
-	rank.classList.add("rank");
+    finishBox.classList.remove("hidden");
 
-	if (rate === 100) {
-		rank.textContent = "🏆 Sランク (パーフェクト！)";
-		rank.style.color = "gold";
-	} else if (rate >= 90) {
-		rank.textContent = "🥇 Aランク (優秀です！)";
-		rank.style.color = "#00ff88";
-	} else if (rate >= 80) {
-		rank.textContent = "🥈 Bランク (合格ライン突破！)";
-		rank.style.color = "#00bfff";
-	} else if (rate >= 70) {
-		rank.textContent = "🥉 Cランク (もう少し頑張りましょう)";
-		rank.style.color = "orange";
-	} else {
-		rank.textContent = "📚 不合格 (もう一度挑戦！)";
-		rank.style.color = "#ff5555";
-	}
+    finalScore.textContent =
+        `正答数：${score} / ${quizQuestions.length}`;
 
-	const oldRank = finishBox.querySelector(".rank");
-	if (oldRank) oldRank.remove();
-	finalRate.parentNode.insertBefore(rank, finalRate.nextSibling);
+    const rate = Math.round(
+        (score / quizQuestions.length) * 100
+    );
 
-	const retryBtn = document.getElementById("retry-btn");
-	retryBtn.onclick = () => {
-		startQuiz();
-	};
+    finalRate.textContent = `正答率：${rate}%`;
 
-	const resultHomeBtn = document.getElementById("result-home-btn");
-	resultHomeBtn.onclick = () => {
-		quizScreen.classList.add("hidden");
-		finishBox.classList.add("hidden");
-		homeScreen.classList.remove("hidden");
-	};
+    showRank(rate);
+    createResultList();
+}
 
-	const oldList = document.getElementById("result-list");
-	if (oldList) oldList.remove();
+// ===========================
+// ランク表示
+// ===========================
+function showRank(rate) {
+    const oldRank = finishBox.querySelector(".rank");
 
-	const resultList = document.createElement("div");
-	resultList.id = "result-list";
+    if (oldRank) {
+        oldRank.remove();
+    }
 
-	const title = document.createElement("h3");
-	title.textContent = "答え合わせ";
-	title.style.margin = "30px 0 15px 0";
-	title.style.fontSize = "24px";
-	resultList.appendChild(title);
+    const rank = document.createElement("h2");
 
-	quizQuestions.forEach((q, index) => {
-		const item = document.createElement("div");
-		item.classList.add("answer-item");
+    rank.classList.add("rank");
 
-		const correct = userAnswers[index] === q.answer;
+    if (rate === 100) {
+        rank.textContent = "🏆 Sランク（パーフェクト！）";
+        rank.style.color = "gold";
+    } else if (rate >= 90) {
+        rank.textContent = "🥇 Aランク（優秀です！）";
+        rank.style.color = "#00ff88";
+    } else if (rate >= 80) {
+        rank.textContent = "🥈 Bランク（合格ライン突破！）";
+        rank.style.color = "#00bfff";
+    } else if (rate >= 70) {
+        rank.textContent = "🥉 Cランク（もう少し頑張りましょう）";
+        rank.style.color = "orange";
+    } else {
+        rank.textContent = "📚 不合格（もう一度挑戦！）";
+        rank.style.color = "#ff5555";
+    }
 
-		item.innerHTML = `
-			<h4>問題 ${index + 1}</h4>
-			${q.image ? `<img src="${q.image}">` : ""}
-			<p>${q.question}</p>
-			<p>あなたの回答：<span style="color: ${correct ? '#00ffaa' : '#ff5555'};"><strong>${q.choices[userAnswers[index]]}</strong></span></p>
-			<p>正解：<span style="color: #00ffaa;"><strong>${q.choices[q.answer]}</strong></span></p>
-			<p style="color:${correct ? "#00ffaa" : "#ff5555"}; font-size:22px; font-weight:bold; margin-top:10px;">
-				${correct ? "⭕ 正解" : "❌ 不正解"}
-			</p>
-		`;
-		resultList.appendChild(item);
-	});
+    finalRate.insertAdjacentElement("afterend", rank);
+}
 
-	finishBox.appendChild(resultList);
+// ===========================
+// 答え合わせ一覧
+// ===========================
+function createResultList() {
+    const oldResultList = document.getElementById("result-list");
+
+    if (oldResultList) {
+        oldResultList.remove();
+    }
+
+    const resultList = document.createElement("div");
+
+    resultList.id = "result-list";
+
+    const title = document.createElement("h3");
+
+    title.textContent = "答え合わせ";
+    title.style.margin = "30px 0 15px";
+    title.style.fontSize = "24px";
+
+    resultList.appendChild(title);
+
+    quizQuestions.forEach((question, index) => {
+        const selectedAnswer = userAnswers[index];
+        const correctAnswer = question.answer;
+
+        const isCorrect = selectedAnswer === correctAnswer;
+
+        const item = document.createElement("div");
+
+        item.classList.add("answer-item");
+
+        const questionTitle = document.createElement("h4");
+        questionTitle.textContent = `問題 ${index + 1}`;
+
+        item.appendChild(questionTitle);
+
+        // 問題画像
+        if (question.image) {
+            const resultImage = document.createElement("img");
+
+            resultImage.src = question.image;
+            resultImage.alt = `問題 ${index + 1}の画像`;
+
+            item.appendChild(resultImage);
+        }
+
+        // 問題文
+        const questionParagraph = document.createElement("p");
+
+        questionParagraph.textContent = question.question;
+
+        item.appendChild(questionParagraph);
+
+        // 自分の回答
+        const userAnswerParagraph = document.createElement("p");
+        const userAnswerLabel = document.createTextNode("あなたの回答：");
+        const userAnswerSpan = document.createElement("span");
+
+        userAnswerSpan.style.color =
+            isCorrect ? "#00ffaa" : "#ff5555";
+
+        const userAnswerStrong = document.createElement("strong");
+
+        if (
+            selectedAnswer !== undefined &&
+            question.choices[selectedAnswer] !== undefined
+        ) {
+            userAnswerStrong.textContent =
+                question.choices[selectedAnswer];
+        } else {
+            userAnswerStrong.textContent = "未回答";
+        }
+
+        userAnswerSpan.appendChild(userAnswerStrong);
+        userAnswerParagraph.appendChild(userAnswerLabel);
+        userAnswerParagraph.appendChild(userAnswerSpan);
+
+        item.appendChild(userAnswerParagraph);
+
+        // 正解
+        const correctAnswerParagraph = document.createElement("p");
+        const correctAnswerLabel = document.createTextNode("正解：");
+        const correctAnswerSpan = document.createElement("span");
+
+        correctAnswerSpan.style.color = "#00ffaa";
+
+        const correctAnswerStrong = document.createElement("strong");
+
+        correctAnswerStrong.textContent =
+            question.choices[correctAnswer];
+
+        correctAnswerSpan.appendChild(correctAnswerStrong);
+        correctAnswerParagraph.appendChild(correctAnswerLabel);
+        correctAnswerParagraph.appendChild(correctAnswerSpan);
+
+        item.appendChild(correctAnswerParagraph);
+
+        // 正解・不正解表示
+        const resultMark = document.createElement("p");
+
+        resultMark.textContent =
+            isCorrect ? "⭕ 正解" : "❌ 不正解";
+
+        resultMark.style.color =
+            isCorrect ? "#00ffaa" : "#ff5555";
+
+        resultMark.style.fontSize = "22px";
+        resultMark.style.fontWeight = "bold";
+        resultMark.style.marginTop = "10px";
+
+        item.appendChild(resultMark);
+        resultList.appendChild(item);
+    });
+
+    finishBox.appendChild(resultList);
+}
+
+// ===========================
+// もう一度挑戦
+// ===========================
+retryBtn.addEventListener("click", () => {
+    if (randomMode) {
+        quizQuestions = shuffleArray([...quizQuestions]);
+    }
+
+    startQuiz();
+});
+
+// ===========================
+// 結果画面からホームへ戻る
+// ===========================
+resultHomeBtn.addEventListener("click", () => {
+    quizScreen.classList.add("hidden");
+    finishBox.classList.add("hidden");
+    categoryMenu.classList.add("hidden");
+    homeScreen.classList.remove("hidden");
+
+    removeOldResultElements();
+});
+
+// ===========================
+// 古い結果表示を削除
+// ===========================
+function removeOldResultElements() {
+    const oldRank = finishBox.querySelector(".rank");
+
+    if (oldRank) {
+        oldRank.remove();
+    }
+
+    const oldResultList = document.getElementById("result-list");
+
+    if (oldResultList) {
+        oldResultList.remove();
+    }
+}
+
+// ===========================
+// 配列をシャッフル
+// ===========================
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const randomIndex = Math.floor(
+            Math.random() * (i + 1)
+        );
+
+        [array[i], array[randomIndex]] =
+            [array[randomIndex], array[i]];
+    }
+
+    return array;
+}
+
+// ===========================
+// 選択肢をシャッフル
+// questions.jsのanswerは0～3を使用
+// ===========================
+function createShuffledQuestion(question) {
+    const choiceData = question.choices.map((choice, index) => {
+        return {
+            text: choice,
+            isCorrect: index === question.answer
+        };
+    });
+
+    shuffleArray(choiceData);
+
+    const shuffledChoices = choiceData.map(item => item.text);
+
+    const shuffledCorrectAnswer =
+        choiceData.findIndex(item => item.isCorrect);
+
+    return {
+        ...question,
+        choices: shuffledChoices,
+        answer: shuffledCorrectAnswer
+    };
 }
