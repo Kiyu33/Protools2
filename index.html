@@ -39,11 +39,11 @@
     </div>
 
     <!-- ===========================
-         初級メニュー
+         初級・中級共通メニュー
     ============================ -->
     <div id="beginner-menu" class="container hidden">
 
-        <h1>🟢 初級問題</h1>
+        <h1 id="menu-title">🟢 初級問題</h1>
 
         <p class="subtitle">
             範囲を選択してください
@@ -80,7 +80,7 @@
     <!-- ===========================
          問題画面
     ============================ -->
-    <div id="quiz-screen" class="container hidden">
+        <div id="quiz-screen" class="container hidden">
 
         <header>
 
@@ -91,9 +91,7 @@
             </div>
 
             <div class="progress">
-
                 <div id="progress-bar"></div>
-
             </div>
 
         </header>
@@ -128,9 +126,22 @@
 
                 <p id="final-rate"></p>
 
-                <button onclick="location.reload()">
-                    もう一度挑戦
-                </button>
+                <div class="result-actions"
+                     style="display:flex; gap:15px; justify-content:center; margin-top:20px;">
+
+                    <button id="retry-btn"
+                            class="mode-btn"
+                            style="margin:0; width:auto; padding:15px 30px;">
+                        🔄 もう一度挑戦
+                    </button>
+
+                    <button id="result-home-btn"
+                            class="mode-btn"
+                            style="margin:0; width:auto; padding:15px 30px; background:#444;">
+                        🏠 ホームへ戻る
+                    </button>
+
+                </div>
 
             </div>
 
